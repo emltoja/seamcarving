@@ -1,0 +1,6 @@
+.vscode/
+testimages/
+outimages/
+stb_image_write.h
+stb_image.h
+*.exe
