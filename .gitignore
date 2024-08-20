@@ -3,4 +3,9 @@ testimages/
 outimages/
 stb_image_write.h
 stb_image.h
+log.c
+log.h
+*.o
 *.exe
+TODO.md
+.gitignore
