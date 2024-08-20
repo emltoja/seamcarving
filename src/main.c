@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <assert.h>
-#include "bitarray.h"
-#include "types.h"
-#include "filters.h"
-#include "carving.h"
-#include "log.h"
+#include "..\headers\bitarray.h"
+#include "..\headers\types.h"
+#include "..\headers\filters.h"
+#include "..\headers\carving.h"
+#include "..\headers\log.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "..\headers\stb_image.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
+#include "..\headers\stb_image_write.h"
 
 int main(int argc, char** argv) {
 
@@ -40,5 +40,6 @@ int main(int argc, char** argv) {
     log_info("Saved image to: %s\n", outpath);
 
     free(pixels);
+
     return 0; 
 }

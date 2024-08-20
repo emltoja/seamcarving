@@ -1,4 +1,4 @@
-#include "carving.h"
+#include "..\headers\carving.h"
 
 u32* get_lowest_energy_seam(u8* energy_map, u32 width, u32 height) {
 

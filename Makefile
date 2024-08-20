@@ -4,30 +4,38 @@
 CC = gcc
 
 # Define the flags 
-CFLAGS = -Wall -Wextra -ggdb
+CFLAGS = -Wall -Wextra -ggdb -mconsole
 
-# Define the target 
-TARGET = main 
+# Define the dirs
+SRC_DIR = src
+OBJ_DIR = obj
+BUILD_DIR = build
 
-# Find all the .c files in the current directory 
-SOURCES = $(wildcard *.c)
+# Define the target executable
+TARGET = $(BUILD_DIR)/main.exe
 
-# Generate the object files from the .c files 
-OBJECTS = $(SOURCES:.c=.o)
+# Find all .c files in the src directory
+SRCS = $(wildcard $(SRC_DIR)/*.c)
 
-# Default rule to build the executable
-$(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) -lm
+# Generate object files in the obj directory
+OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
-# Rule to compile the .c files
-%.o: %.c
+# Default rule to build the target
+$(TARGET): $(OBJS)
+	@mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) -lm
+
+# Rule to compile .c files to .o files in the obj directory
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Rule to clean the files generated during the build
+# Custom rule to compile and run the program with arguments
+run: $(TARGET)
+	./$(TARGET) $(ARGS)
+
+# Clean up the build files
 .PHONY: clean
 clean:
-	rm -f $(TARGET) $(OBJECTS)
-
-# Rule to run the program with given args 
-run: 
-	.\\$(TARGET) $(ARGS)
+	rm -f $(OBJ_DIR)/*.o $(TARGET)
+	rmdir $(OBJ_DIR) $(BUILD_DIR) 2>/dev/null || true

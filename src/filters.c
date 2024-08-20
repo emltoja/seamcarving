@@ -1,4 +1,4 @@
-#include "filters.h"
+#include "..\headers\filters.h"
 
 u32 bytes_to_rgba(u8 r, u8 g, u8 b, u8 a) {
     return shb(a, 3) | shb(b, 2) | shb(g, 1) | r;
