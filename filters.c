@@ -4,7 +4,7 @@ u32 bytes_to_rgba(u8 r, u8 g, u8 b, u8 a) {
     return shb(a, 3) | shb(b, 2) | shb(g, 1) | r;
 }
 
-u32 bytes_to_grayscale(u8 val, u8 a) {
+u8 bytes_to_grayscale(u8 val, u8 a) {
     return shb(a, 3) | shb(val, 2) | shb(val, 1) | val;
 }
 
@@ -84,12 +84,12 @@ u32* multiple_argmin(u32* vals, u32 length, u32 out_length) {
         u32* copy = malloc(length * sizeof(u32));
     
         if (argmins == NULL) {
-            printf("Failed to allocate memory for argmins\n");
+            log_error("Failed to allocate memory for argmins\n");
             return NULL;
         }
     
         if (copy == NULL) {
-            printf("Failed to allocate memory for copy\n");
+            log_error("Failed to allocate memory for copy\n");
             return NULL;
         }
     
@@ -116,12 +116,12 @@ u32* multiple_argmax(u32* vals, u32 length, u32 count) {
         u32* copy = malloc(length * sizeof(u32));
     
         if (argmaxs == NULL) {
-            printf("Failed to allocate memory for argmaxs\n");
+            log_error("Failed to allocate memory for argmaxs\n");
             return NULL;
         }
     
         if (copy == NULL) {
-            printf("Failed to allocate memory for copy\n");
+            log_error("Failed to allocate memory for copy\n");
             return NULL;
         }
     
@@ -148,7 +148,7 @@ f32* convolute(u32* mask, f32* arr, u32 width, u32 height) {
 
     f32* result = malloc(width * height * sizeof(f32));
     if (result == NULL) {
-        printf("Failed to allocate memory for result\n");
+        log_error("Failed to allocate memory for result\n");
         return NULL;
     }
 
@@ -193,7 +193,7 @@ f32* padded_arr(f32* arr, u32 width, u32 height) {
     f32* padded = malloc(new_width * new_height * sizeof(f32));
 
     if (padded == NULL) {
-        printf("Failed to allocate memory padded\n");
+        log_error("Failed to allocate memory padded\n");
         return NULL;
     }
 
@@ -213,10 +213,10 @@ f32* padded_arr(f32* arr, u32 width, u32 height) {
 }
 
 
-u32* sobel_filter(u32* arr, u32 width, u32 height) {
+u8* sobel_filter(u8* arr, u32 width, u32 height) {
 
     f32 *lum          = malloc(width * height * sizeof(f32));
-    u32 *result       = malloc(width * height * sizeof(u32));
+    u8  *result       = malloc(width * height * sizeof(u8));
     f32 *sobel_result = malloc(width * height * sizeof(f32));
     f32 *padded;
     f32 *gx, *gy;
@@ -226,17 +226,17 @@ u32* sobel_filter(u32* arr, u32 width, u32 height) {
     u32 gy_mask[9] = {-1, -2, -1, 0, 0, 0, 1, 2, 1};
 
     if (sobel_result == NULL) {
-        printf("Failed to allocate memory for sobel_result\n");
+        log_error("Failed to allocate memory for sobel_result\n");
         return NULL;
     }
 
     if (lum == NULL) {
-        printf("Failed to allocate memory lum\n");
+        log_error("Failed to allocate memory lum\n");
         return NULL;
     }
 
     if (result == NULL) {
-        printf("Failed to allocate memory for result\n");
+        log_error("Failed to allocate memory for result\n");
         return NULL;
     }
 

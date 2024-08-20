@@ -2,12 +2,22 @@
 #define BIT_ARRAY_H
 
 #include "types.h"
-#include <malloc.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-void set_bit(u8 *array, u32 bit_num);
-void clear_bit(u8 *array, u32 bit_num);
-u8 get_bit(u8 *array, u32 bit_num);
-u8* get_bitarray(u32 size);
+typedef struct {
+    u8 *array;
+    size_t size;
+} BitArray;
+
+
+BitArray* create_bitarray(size_t size);
+void set_bit(BitArray *array, u32 bit_num);
+void clear_bit(BitArray *array, u32 bit_num);
+void flip_bit(BitArray *array, u32 bit_num);
+u8 get_bit(BitArray *array, u32 bit_num);
+void free_bitarray(BitArray *array);
+
 #endif // BIT_ARRAY_H

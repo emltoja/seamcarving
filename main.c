@@ -4,6 +4,7 @@
 #include "types.h"
 #include "filters.h"
 #include "carving.h"
+#include "log.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -15,24 +16,28 @@ int main(int argc, char** argv) {
 
     assert (argc == 4), "Usage: .\\main.exe <input_image_path> <output_image_path> <width_trim>";
 
-    u32* pixels;
-    u32 width, height;
+    u8* pixels;
+    i32 width, height;
+    i32 new_width;
     u32 width_trim = atoi(argv[3]);
 
-    const u8* filepath = argv[1];
-    const u8* outpath = argv[2];
+    const char* filepath = argv[1];
+    const char* outpath = argv[2];
 
     pixels = stbi_load(filepath, &width, &height, NULL, 4);
     if (pixels == NULL) {
-        printf("Failed to load image: %s\n", stbi_failure_reason());
+        log_error("Failed to load image: %s\n", stbi_failure_reason());
         return 2;
+    } else {
+        log_info("Loaded image with width: %d, height: %d\n", width, height);
     }
 
-
-    remove_multiple_vertical_seams(pixels, width, height, width_trim, &width);
+    remove_multiple_vertical_seams(pixels, width, height, width_trim, &new_width);
     // mark_multiple_vertical_seams(pixels, width, height, width_trim);
 
-    stbi_write_jpg(outpath, width, height, 4, pixels, 100);
+    stbi_write_jpg(outpath, new_width, height, 4, pixels, 100);
+
+    log_info("Saved image to: %s\n", outpath);
 
     free(pixels);
     return 0; 

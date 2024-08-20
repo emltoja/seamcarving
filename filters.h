@@ -2,7 +2,9 @@
 #define FILTERS_H
 
 #include "types.h"
+#include "log.h"
 #include <math.h>
+#include <stdlib.h>
 
 #define shb(x, n) ((x) << (8*(n)))
 
@@ -17,7 +19,7 @@ typedef struct {
 } Extrema;
 
 u32 bytes_to_rgba(u8 r, u8 g, u8 b, u8 a);
-u32 bytes_to_grayscale(u8 val,u8 a);
+u8 bytes_to_grayscale(u8 val,u8 a);
 f32 rgb_to_lum(u32 rgb);
 
 u32 minimum(u32* vals, u32 length);
@@ -30,6 +32,6 @@ Extrema extremas(f32* arr, u32 length);
 
 f32* convolute(u32* mask, f32* arr, u32 width, u32 height);
 f32* padded_arr(f32* arr, u32 width, u32 length);
-u32* sobel_filter(u32* arr, u32 width, u32 height);
+u8* sobel_filter(u8* arr, u32 width, u32 height);
 
 #endif // FILTERS_H
